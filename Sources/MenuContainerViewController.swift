@@ -109,7 +109,7 @@ open class MenuContainerViewController: UIViewController {
             action: #selector(MenuInteractiveTransition.handlePanPresentation(recognizer:))
         )
 
-        screenEdgePanRecognizer.edges = .left
+        screenEdgePanRecognizer.edges = ((Locale.current.languageCode == "ar") ? .right : .left)
         view.addGestureRecognizer(screenEdgePanRecognizer)
     }
 

@@ -131,7 +131,7 @@ extension MenuInteractiveTransition {
             toViewController.view.transform = CGAffineTransform(scaleX: options.contentScale, y: options.contentScale)
             addShadow(to: toViewController.view)
 
-            let newOrigin = CGPoint(x: screenWidth - options.visibleContentWidth, y: toViewController.view.frame.origin.y)
+            let newOrigin = CGPoint(x: (screenWidth - options.visibleContentWidth) * ((Locale.current.languageCode == "ar") ? -1 : 1), y: toViewController.view.frame.origin.y)
             let rect = CGRect(origin: newOrigin, size: toViewController.view.frame.size)
 
             toViewController.view.frame = rect
@@ -214,7 +214,7 @@ extension MenuInteractiveTransition {
     private func addShadow(to view: UIView) {
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOpacity = 0.3
-        view.layer.shadowOffset = CGSize(width: -5, height: 5)
+        view.layer.shadowOffset = CGSize(width: -5 * ((Locale.current.languageCode == "ar") ? -1 : 1), height: 5)
     }
 
     private func removeShadow(from view: UIView) {
@@ -275,9 +275,9 @@ extension MenuInteractiveTransition {
             fatalError("Invalid recognizer view value")
         }
         let translation = recognizer.translation(in: recognizerView)
-        let dx = translation.x / recognizerView.bounds.width
+        let dx = translation.x / recognizerView.bounds.width  * ((Locale.current.languageCode == "ar") ? -1 : 1)
         let progress: CGFloat = abs(dx)
-        var velocity = recognizer.velocity(in: recognizerView).x
+        var velocity = recognizer.velocity(in: recognizerView).x  * ((Locale.current.languageCode == "ar") ? -1 : 1)
 
         if !present {
             velocity = -velocity
@@ -355,7 +355,7 @@ extension MenuInteractiveTransition {
 
         if present {
             let newScale = 1 - (1 - options.contentScale) * percentComplete
-            let newX = totalWidth * percentComplete
+            let newX = totalWidth * percentComplete  * ((Locale.current.languageCode == "ar") ? -1 : 1)
 
             contentSnapshotView.transform = CGAffineTransform(scaleX: newScale, y: newScale)
 
@@ -369,7 +369,7 @@ extension MenuInteractiveTransition {
             guard let toViewController = transitionContext.viewController(forKey: .to) else {
                 fatalError("Invalid toViewController key. Can't update transition")
             }
-            let newX = totalWidth * (1 - percentComplete)
+            let newX = totalWidth * (1 - percentComplete)  * ((Locale.current.languageCode == "ar") ? -1 : 1)
 
             let newScale = options.contentScale + (1 - options.contentScale) * percentComplete
             toViewController.view.transform = CGAffineTransform(scaleX: newScale, y: newScale)
